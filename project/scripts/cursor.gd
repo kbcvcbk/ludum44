@@ -12,5 +12,4 @@ func _process(delta):
 		was_click = clicking
 	elif was_click and !clicking:
 		was_click = clicking
-		print("dropped")
 		emit_signal("mouse_dropped", item)

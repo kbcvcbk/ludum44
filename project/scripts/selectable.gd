@@ -3,6 +3,7 @@ extends Area2D
 signal cursor_entered
 signal cursor_exited
 var selected = false
+var droppable = false
 
 func _ready():
 	connect("area_entered", self, "_on_cursor_entered")
@@ -11,7 +12,9 @@ func _ready():
 func _on_cursor_entered(cursor):
 	if cursor.is_in_group("cursor"):
 		selected = true
+		if droppable and cursor.item != null: cursor.item.connect("dropped", self, "_on_item_dropped")
 
 func _on_cursor_exited(cursor):
 	if cursor.is_in_group("cursor"):
 		selected = false
+		if droppable and cursor.item != null: cursor.item.disconnect("dropped", self, "_on_item_dropped")

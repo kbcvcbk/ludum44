@@ -1,8 +1,8 @@
 extends "res://scripts/draggable.gd"
 
 var looping : bool = false
-var scale_sel = Vector2(1.1, 1.1)
-var scale_unsel = Vector2(1, 1)
+onready var scale_sel = self.scale*1.1
+onready var scale_unsel = self.scale
 var freq = 0.7
 
 onready var me = self
