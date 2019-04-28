@@ -1,23 +1,36 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://mockup.jpg" type="Texture" id=1]
 [ext_resource path="res://assets/npc.png" type="Texture" id=2]
-[ext_resource path="res://scripts/item.gd" type="Script" id=3]
-[ext_resource path="res://assets/itm1.png" type="Texture" id=4]
-[ext_resource path="res://assets/itm2.png" type="Texture" id=5]
-[ext_resource path="res://assets/itm3.png" type="Texture" id=6]
-[ext_resource path="res://assets/itm4.png" type="Texture" id=7]
-[ext_resource path="res://assets/itm5.png" type="Texture" id=8]
-[ext_resource path="res://scripts/contract.gd" type="Script" id=9]
-[ext_resource path="res://assets/contract/bg.png" type="Texture" id=10]
-[ext_resource path="res://assets/contract/frame.png" type="Texture" id=11]
-[ext_resource path="res://assets/contract/p1.png" type="Texture" id=12]
-[ext_resource path="res://assets/contract/p2.png" type="Texture" id=13]
-[ext_resource path="res://assets/contract/p3.png" type="Texture" id=14]
-[ext_resource path="res://assets/contract/p4.png" type="Texture" id=15]
-[ext_resource path="res://assets/contract/seal.png" type="Texture" id=16]
-[ext_resource path="res://assets/contract/sign.png" type="Texture" id=17]
+[ext_resource path="res://scripts/contract.gd" type="Script" id=3]
+[ext_resource path="res://assets/contract/bg.png" type="Texture" id=4]
+[ext_resource path="res://assets/contract/frame.png" type="Texture" id=5]
+[ext_resource path="res://assets/contract/p1.png" type="Texture" id=6]
+[ext_resource path="res://assets/contract/p2.png" type="Texture" id=7]
+[ext_resource path="res://assets/contract/p3.png" type="Texture" id=8]
+[ext_resource path="res://assets/contract/p4.png" type="Texture" id=9]
+[ext_resource path="res://assets/contract/seal.png" type="Texture" id=10]
+[ext_resource path="res://assets/contract/sign.png" type="Texture" id=11]
+[ext_resource path="res://scripts/item.gd" type="Script" id=12]
+[ext_resource path="res://assets/itm1.png" type="Texture" id=13]
+[ext_resource path="res://assets/itm2.png" type="Texture" id=14]
+[ext_resource path="res://assets/itm3.png" type="Texture" id=15]
+[ext_resource path="res://assets/itm4.png" type="Texture" id=16]
+[ext_resource path="res://assets/itm5.png" type="Texture" id=17]
 [ext_resource path="res://scripts/cursor.gd" type="Script" id=18]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 107.38, 170.718 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+emission_shape = 2
+emission_box_extents = Vector3( 110, 170, 1 )
+flag_disable_z = true
+gravity = Vector3( 15, -50, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+color = Color( 0.729412, 0, 0.831373, 1 )
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 32.0231
@@ -41,9 +54,6 @@ height = 50.6913
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 15.8847, 27.2636 )
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 107.38, 170.718 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 2.0
@@ -71,6 +81,63 @@ margin_right = 856.0
 margin_bottom = 571.0
 color = Color( 0.321569, 0.133333, 0.0745098, 1 )
 
+[node name="contract" type="Area2D" parent="counter/table"]
+editor/display_folded = true
+position = Vector2( 168.31, 93 )
+script = ExtResource( 3 )
+
+[node name="bg" type="Sprite" parent="counter/table/contract"]
+texture = ExtResource( 4 )
+
+[node name="frame" type="Sprite" parent="counter/table/contract"]
+texture = ExtResource( 5 )
+
+[node name="p1" type="Sprite" parent="counter/table/contract" groups=[
+"contract_part",
+]]
+texture = ExtResource( 6 )
+
+[node name="p2" type="Sprite" parent="counter/table/contract" groups=[
+"contract_part",
+]]
+texture = ExtResource( 7 )
+
+[node name="p3" type="Sprite" parent="counter/table/contract" groups=[
+"contract_part",
+]]
+texture = ExtResource( 8 )
+
+[node name="p4" type="Sprite" parent="counter/table/contract" groups=[
+"contract_part",
+]]
+texture = ExtResource( 9 )
+
+[node name="sign" type="Sprite" parent="counter/table/contract" groups=[
+"contract_part",
+]]
+texture = ExtResource( 10 )
+
+[node name="seal" type="Sprite" parent="counter/table/contract" groups=[
+"contract_part",
+]]
+texture = ExtResource( 11 )
+
+[node name="collider" type="CollisionShape2D" parent="counter/table/contract"]
+position = Vector2( -1.50735, 28.6394 )
+rotation = -0.279253
+scale = Vector2( 0.928223, 0.899681 )
+shape = SubResource( 1 )
+
+[node name="particles" type="Particles2D" parent="counter/table/contract"]
+position = Vector2( 2.20529, 33.8144 )
+rotation = -0.287184
+emitting = false
+amount = 200
+one_shot = true
+explosiveness = 0.3
+visibility_rect = Rect2( -100, -150, 200, 300 )
+process_material = SubResource( 9 )
+
 [node name="items" type="Node2D" parent="counter/table"]
 editor/display_folded = true
 position = Vector2( 38, -328 )
@@ -78,14 +145,14 @@ position = Vector2( 38, -328 )
 [node name="itm1" type="Area2D" parent="counter/table/items"]
 editor/display_folded = true
 position = Vector2( 490.902, 422.721 )
-script = ExtResource( 3 )
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm1" type="Sprite" parent="counter/table/items/itm1"]
 scale = Vector2( 1.16732, 1.16732 )
-texture = ExtResource( 4 )
+texture = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/table/items/itm1"]
 position = Vector2( 2.20526, 5.88077 )
@@ -94,13 +161,13 @@ shape = SubResource( 3 )
 [node name="itm2" type="Area2D" parent="counter/table/items"]
 editor/display_folded = true
 position = Vector2( 599.992, 405.189 )
-script = ExtResource( 3 )
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm2" type="Sprite" parent="counter/table/items/itm2"]
-texture = ExtResource( 5 )
+texture = ExtResource( 14 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/table/items/itm2"]
 rotation = 1.57079
@@ -109,13 +176,13 @@ shape = SubResource( 4 )
 [node name="itm3" type="Area2D" parent="counter/table/items"]
 editor/display_folded = true
 position = Vector2( 550.343, 528.915 )
-script = ExtResource( 3 )
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm3" type="Sprite" parent="counter/table/items/itm3"]
-texture = ExtResource( 6 )
+texture = ExtResource( 15 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/table/items/itm3"]
 shape = SubResource( 5 )
@@ -124,13 +191,13 @@ shape = SubResource( 5 )
 editor/display_folded = true
 position = Vector2( 656.484, 500.642 )
 rotation = -4.00938
-script = ExtResource( 3 )
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm4" type="Sprite" parent="counter/table/items/itm4"]
-texture = ExtResource( 7 )
+texture = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/table/items/itm4"]
 position = Vector2( 5.91205, -2.11957 )
@@ -140,13 +207,13 @@ shape = SubResource( 6 )
 [node name="itm5" type="Area2D" parent="counter/table/items"]
 editor/display_folded = true
 position = Vector2( 730.509, 342.852 )
-script = ExtResource( 3 )
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm5" type="Sprite" parent="counter/table/items/itm5"]
-texture = ExtResource( 8 )
+texture = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/table/items/itm5"]
 position = Vector2( -0.735107, 33.0793 )
@@ -155,53 +222,6 @@ shape = SubResource( 7 )
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="counter/table/items/itm5"]
 position = Vector2( -2.20526, -63.9532 )
 shape = SubResource( 8 )
-
-[node name="contract" type="Area2D" parent="counter/table"]
-editor/display_folded = true
-position = Vector2( 168.31, 93 )
-script = ExtResource( 9 )
-
-[node name="bg" type="Sprite" parent="counter/table/contract"]
-texture = ExtResource( 10 )
-
-[node name="frame" type="Sprite" parent="counter/table/contract"]
-texture = ExtResource( 11 )
-
-[node name="p1" type="Sprite" parent="counter/table/contract" groups=[
-"contract_part",
-]]
-texture = ExtResource( 12 )
-
-[node name="p2" type="Sprite" parent="counter/table/contract" groups=[
-"contract_part",
-]]
-texture = ExtResource( 13 )
-
-[node name="p3" type="Sprite" parent="counter/table/contract" groups=[
-"contract_part",
-]]
-texture = ExtResource( 14 )
-
-[node name="p4" type="Sprite" parent="counter/table/contract" groups=[
-"contract_part",
-]]
-texture = ExtResource( 15 )
-
-[node name="sign" type="Sprite" parent="counter/table/contract" groups=[
-"contract_part",
-]]
-texture = ExtResource( 16 )
-
-[node name="seal" type="Sprite" parent="counter/table/contract" groups=[
-"contract_part",
-]]
-texture = ExtResource( 17 )
-
-[node name="collider" type="CollisionShape2D" parent="counter/table/contract"]
-position = Vector2( -1.50735, 28.6394 )
-rotation = -0.279253
-scale = Vector2( 0.928223, 0.899681 )
-shape = SubResource( 1 )
 
 [node name="cursor" type="Area2D" parent="." groups=[
 "cursor",

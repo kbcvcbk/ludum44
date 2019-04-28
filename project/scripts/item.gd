@@ -1,4 +1,4 @@
-extends "res://scripts/selectable.gd"
+extends "res://scripts/draggable.gd"
 
 var looping : bool = false
 var scale_sel = Vector2(1.1, 1.1)

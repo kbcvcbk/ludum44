@@ -1,7 +1,8 @@
-extends Node
+extends Area2D
 
+signal cursor_entered
+signal cursor_exited
 var selected = false
-var clicked = false
 
 func _ready():
 	connect("area_entered", self, "_on_cursor_entered")
