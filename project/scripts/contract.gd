@@ -2,13 +2,16 @@ extends "res://scripts/selectable.gd"
 
 onready var part_list = get_tree().get_nodes_in_group("contract_part")
 var current_part = 0
-var max_part = 6 #number of parts
+var max_part = 6 # number of parts
 
 func _ready():
-	droppable = true
+	cursor.connect("dropped", self, "_on_item_dropped")
 	hide_all()
 
+func _process(delta): print(selected)
 func _on_item_dropped(item):
+	print("dropped!")
+	if selected:
 		$particles.emitting = false
 		$particles.emitting = true
 		show_next()
