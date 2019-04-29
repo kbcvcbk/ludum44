@@ -3,7 +3,8 @@ extends Node
 var text_node
 var queue : Array
 
-func say(dialogue):
+func say(current_npc, thing):
+	var dialogue = files.read_npc_db()[current_npc][thing]
 	queue = dialogue
 	text_node.visible = true
 	next()

@@ -6,7 +6,7 @@ valid=false
 
 [deps]
 
-source_file="res://assets/writing/npc_item_matchup.csv"
+source_file="res://assets/writing/npc_db.csv"
 [params]
 
 compress=true

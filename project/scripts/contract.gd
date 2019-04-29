@@ -9,30 +9,32 @@ func _ready():
 	cursor.connect("dropped", self, "_on_item_dropped")
 	hide_all()
 
+func _process(delta):
+	if selected and Input.is_action_just_pressed("ui_accept"):
+		if $header/seal.visible:
+			storyteller.end_scene()
+		elif $header/content.visible:
+			show_sign()
+
 func _on_item_dropped(item):
 	if selected:
-		$particles.emitting = false
-		$particles.emitting = true
-		show_next()
+		show_content(item)
+		storyteller.interact(item)
 		item.visible = false
 		yield(get_tree().create_timer(1.5), "timeout")
 		item.queue_free()
 
-func hide_all():
-	pass
-#	for part in part_list:
-#		part.visible = false
+func show_content(item):
+	$particles.emitting = false
+	$particles.emitting = true
+	$header/content.visible = true
+	
+func show_sign():
+	$particles.emitting = false
+	$particles.emitting = true
+	$header/seal.visible = true
 
-func show_next():
-	pass
-#	if current_part >= max_part:
-#		current_part = 0
-#		hide_all()
-#	elif current_part == 4:
-#		part_list[4].visible = true
-#		part_list[5].visible = true
-#		current_part = 6
-#	else:
-#		var part = part_list[current_part]
-#		part.visible = true
-#		current_part += 1
+func hide_all():
+	$header/content.visible = false
+	$header/seal.visible = false
+

@@ -7,5 +7,5 @@
 ## features
 - personagem aparecer em cantos aleatórios do balcão
 - parallax
-- balão de fala
-- integração npc-item
+- balão de fala [PARTIAL]
+- integração npc-item [DOING]

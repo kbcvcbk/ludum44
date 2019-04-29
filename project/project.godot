@@ -22,11 +22,11 @@ config/icon="res://icon.png"
 [autoload]
 
 cursor="*res://scripts/singletons/cursor.gd"
-control="*res://scripts/singletons/prop.gd"
-audio="*res://scripts/singletons/audio.gd"
+files="*res://scripts/singletons/files.gd"
 textbox="*res://scripts/singletons/textbox.gd"
 storyteller="*res://scripts/singletons/storyteller.gd"
-files="*res://scripts/singletons/files.gd"
+audio="*res://scripts/singletons/audio.gd"
+control="*res://scripts/singletons/prop.gd"
 
 [display]
 
