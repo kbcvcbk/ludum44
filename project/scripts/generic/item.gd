@@ -1,4 +1,4 @@
-extends "res://scripts/draggable.gd"
+extends "res://scripts/generic/draggable.gd"
 
 var looping : bool = false
 

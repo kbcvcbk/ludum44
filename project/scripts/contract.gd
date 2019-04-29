@@ -1,10 +1,11 @@
-extends "res://scripts/selectable.gd"
+extends "res://scripts/generic/selectable.gd"
 
 onready var part_list = get_tree().get_nodes_in_group("contract_part")
 var current_part = 0
 var max_part = 6 # number of parts
 
 func _ready():
+	storyteller.contract = self
 	cursor.connect("dropped", self, "_on_item_dropped")
 	hide_all()
 

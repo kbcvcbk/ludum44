@@ -1,4 +1,4 @@
-extends "res://scripts/selectable.gd"
+extends "res://scripts/generic/selectable.gd"
 
 var held = false
 

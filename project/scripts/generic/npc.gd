@@ -3,16 +3,14 @@ extends Node
 onready var init_pos = self.position
 var scroll = 100
 var duration = 0.7
-var animating = false
 
-onready var puppeteer = get_parent()
 onready var tween = Tween.new()
 
 func _ready():
 	add_child(tween)
 
 func enter():
-	Background.toggle_door("open")
+	control.toggle_door("open")
 	self.modulate.a = 0
 	self.position.x -= scroll
 	tween.interpolate_property(self, "modulate:a",
@@ -24,7 +22,7 @@ func enter():
 	tween.start()
 	self.visible = true
 	yield(tween, "tween_completed")
-	Background.toggle_door("close")
+	control.toggle_door("close")
 	self.position = init_pos
 
 func leave():
@@ -35,8 +33,8 @@ func leave():
 			init_pos.x, self.position.x-scroll, duration,
 			Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	tween.start()
-	Background.toggle_door("open")
+	control.toggle_door("open")
 	yield(tween, "tween_completed")
-	Background.toggle_door("close")
+	control.toggle_door("close")
 	self.visible = false
 	self.position = init_pos
