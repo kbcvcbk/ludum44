@@ -8,9 +8,7 @@ func _ready():
 	cursor.connect("dropped", self, "_on_item_dropped")
 	hide_all()
 
-func _process(delta): print(selected)
 func _on_item_dropped(item):
-	print("dropped!")
 	if selected:
 		$particles.emitting = false
 		$particles.emitting = true

@@ -4,6 +4,7 @@ signal dropped
 
 var cn
 var item
+var holding = false
 var selected = []
 
 var selection_queue
@@ -21,5 +22,5 @@ func select(obj):
 
 func unselect(obj):
 	var obji = selected.find(obj)
-	selected[obji].selected = false
+	if not obji < 0: selected[obji].selected = false
 	selected.remove(obji)

@@ -5,36 +5,32 @@
 [ext_resource path="res://assets/props/tapete.png" type="Texture" id=3]
 [ext_resource path="res://assets/props/planta.png" type="Texture" id=4]
 [ext_resource path="res://assets/props/cat.png" type="Texture" id=5]
-[ext_resource path="res://scripts/npcs.gd" type="Script" id=6]
-[ext_resource path="res://assets/npcs/supla do mal.png" type="Texture" id=7]
-[ext_resource path="res://assets/npcs/xuxa paquita demoino.png" type="Texture" id=8]
-[ext_resource path="res://assets/npcs/punk.png" type="Texture" id=9]
-[ext_resource path="res://assets/npcs/lavinia1.png" type="Texture" id=10]
-[ext_resource path="res://assets/npcs/edgar.png" type="Texture" id=11]
-[ext_resource path="res://assets/npcs/velha DOIDA.png" type="Texture" id=12]
-[ext_resource path="res://assets/props/balcao.png" type="Texture" id=13]
-[ext_resource path="res://scripts/contract.gd" type="Script" id=14]
-[ext_resource path="res://assets/contract/papel.png" type="Texture" id=15]
-[ext_resource path="res://assets/contract/contrato.png" type="Texture" id=16]
-[ext_resource path="res://assets/contract/texto.png" type="Texture" id=17]
-[ext_resource path="res://assets/contract/assinatura.png" type="Texture" id=18]
-[ext_resource path="res://scripts/item.gd" type="Script" id=19]
-[ext_resource path="res://assets/props/items/itm2.png" type="Texture" id=20]
-[ext_resource path="res://assets/props/items/itm3.png" type="Texture" id=21]
-[ext_resource path="res://assets/items/galho.png" type="Texture" id=22]
-[ext_resource path="res://assets/items/garrafa 1.png" type="Texture" id=23]
-[ext_resource path="res://assets/items/fogo.png" type="Texture" id=24]
-[ext_resource path="res://assets/items/moedas.png" type="Texture" id=25]
-[ext_resource path="res://mockup 04.png" type="Texture" id=26]
-[ext_resource path="res://assets/novadaemerald.wav" type="AudioStream" id=27]
-[ext_resource path="res://assets/sfx/door.wav" type="AudioStream" id=28]
+[ext_resource path="res://scripts/puppeter.gd" type="Script" id=6]
+[ext_resource path="res://scripts/npc.gd" type="Script" id=7]
+[ext_resource path="res://assets/npcs/supla do mal.png" type="Texture" id=8]
+[ext_resource path="res://assets/npcs/xuxa paquita demoino.png" type="Texture" id=9]
+[ext_resource path="res://assets/npcs/punk.png" type="Texture" id=10]
+[ext_resource path="res://assets/npcs/lavinia1.png" type="Texture" id=11]
+[ext_resource path="res://assets/npcs/edgar.png" type="Texture" id=12]
+[ext_resource path="res://assets/npcs/velha DOIDA.png" type="Texture" id=13]
+[ext_resource path="res://assets/props/balcao.png" type="Texture" id=14]
+[ext_resource path="res://scripts/contract.gd" type="Script" id=15]
+[ext_resource path="res://assets/contract/papel.png" type="Texture" id=16]
+[ext_resource path="res://assets/contract/contrato.png" type="Texture" id=17]
+[ext_resource path="res://assets/contract/texto.png" type="Texture" id=18]
+[ext_resource path="res://assets/contract/assinatura.png" type="Texture" id=19]
+[ext_resource path="res://scripts/item.gd" type="Script" id=20]
+[ext_resource path="res://assets/props/items/itm2.png" type="Texture" id=21]
+[ext_resource path="res://assets/props/items/itm3.png" type="Texture" id=22]
+[ext_resource path="res://assets/items/galho.png" type="Texture" id=23]
+[ext_resource path="res://assets/items/garrafa 1.png" type="Texture" id=24]
+[ext_resource path="res://assets/items/fogo.png" type="Texture" id=25]
+[ext_resource path="res://assets/items/moedas.png" type="Texture" id=26]
+[ext_resource path="res://mockup 04.png" type="Texture" id=27]
+[ext_resource path="res://assets/novadaemerald.wav" type="AudioStream" id=28]
+[ext_resource path="res://assets/sfx/door.wav" type="AudioStream" id=29]
 
-[sub_resource type="GDScript" id=17]
-script/source = "extends Node2D
-
-"
-
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 script/source = "tool
 extends Sprite
 
@@ -45,7 +41,7 @@ func _process(delta):
 			$porta_open.visible = open
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "tool
 extends Sprite
 
@@ -138,7 +134,6 @@ func _ready():
 	audio.audio = self"
 
 [node name="game" type="Node2D"]
-script = SubResource( 17 )
 
 [node name="shop" type="Node2D" parent="."]
 
@@ -159,7 +154,8 @@ editor/display_folded = true
 position = Vector2( 191.853, 146.438 )
 scale = Vector2( 0.500097, 0.500097 )
 texture = ExtResource( 1 )
-script = SubResource( 1 )
+script = SubResource( 2 )
+open = false
 
 [node name="porta_open" type="Sprite" parent="shop/porta"]
 visible = false
@@ -183,12 +179,15 @@ texture = ExtResource( 4 )
 [node name="cat" type="Sprite" parent="shop" groups=[
 "prop",
 ]]
-position = Vector2( 108.187, 297.773 )
+position = Vector2( 108.187, 296.404 )
 scale = Vector2( 0.555884, 0.555884 )
 texture = ExtResource( 5 )
-script = SubResource( 2 )
+script = SubResource( 3 )
+amplitude = 60
+frequency = 3.0
 
 [node name="npcs" type="Area2D" parent="shop"]
+editor/display_folded = true
 position = Vector2( 560.83, 304.149 )
 script = ExtResource( 6 )
 
@@ -199,10 +198,11 @@ editor/display_folded = true
 visible = false
 position = Vector2( -26.3716, -93.1787 )
 scale = Vector2( 0.161795, 0.161795 )
+script = ExtResource( 7 )
 
 [node name="supla do mal" type="Sprite" parent="shop/npcs/supla"]
 position = Vector2( -20.554, -14.2888 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="xuxa" type="Node2D" parent="shop/npcs" groups=[
 "npc",
@@ -211,11 +211,12 @@ editor/display_folded = true
 visible = false
 position = Vector2( -91.4204, -101.969 )
 scale = Vector2( 0.168226, 0.168226 )
+script = ExtResource( 7 )
 
 [node name="xuxa paquita demoino" type="Sprite" parent="shop/npcs/xuxa"]
 position = Vector2( 490.133, 251.07 )
 scale = Vector2( -1.04796, 1.04796 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 2500, 2500 )
 
@@ -226,9 +227,10 @@ editor/display_folded = true
 visible = false
 position = Vector2( -1.75818, -72.0815 )
 scale = Vector2( 0.363468, 0.363468 )
+script = ExtResource( 7 )
 
 [node name="punk" type="Sprite" parent="shop/npcs/punk"]
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 
 [node name="lavinia" type="Node2D" parent="shop/npcs" groups=[
 "npc",
@@ -237,11 +239,12 @@ editor/display_folded = true
 visible = false
 position = Vector2( -31.6456, -68.5654 )
 scale = Vector2( 0.318901, 0.318901 )
+script = ExtResource( 7 )
 
 [node name="punk" type="Sprite" parent="shop/npcs/lavinia"]
 position = Vector2( 93.72, -16.5389 )
 scale = Vector2( 2.56795, 2.56795 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 
 [node name="edgar" type="Node2D" parent="shop/npcs" groups=[
 "npc",
@@ -250,11 +253,12 @@ editor/display_folded = true
 visible = false
 position = Vector2( -21.0972, -73.8397 )
 scale = Vector2( 0.318901, 0.318901 )
+script = ExtResource( 7 )
 
 [node name="punk" type="Sprite" parent="shop/npcs/edgar"]
 position = Vector2( 77.1815, -55.1296 )
 scale = Vector2( 1.2227, 1.2227 )
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 
 [node name="velha" type="Node2D" parent="shop/npcs" groups=[
 "npc",
@@ -263,11 +267,12 @@ editor/display_folded = true
 visible = false
 position = Vector2( -26.3713, -86.1463 )
 scale = Vector2( 0.318901, 0.318901 )
+script = ExtResource( 7 )
 
 [node name="punk" type="Sprite" parent="shop/npcs/velha"]
 position = Vector2( 66.1557, -22.0519 )
 scale = Vector2( 0.680123, 0.680123 )
-texture = ExtResource( 12 )
+texture = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="shop/npcs"]
 position = Vector2( -0.33429, -100.257 )
@@ -278,12 +283,12 @@ shape = SubResource( 4 )
 [node name="table" type="Sprite" parent="counter"]
 position = Vector2( 412.535, 441.239 )
 scale = Vector2( 0.502384, 0.502384 )
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 
 [node name="contract" type="Area2D" parent="counter"]
 editor/display_folded = true
 position = Vector2( 169.897, 410.335 )
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 
 [node name="sprites" type="Node2D" parent="counter/contract"]
 editor/display_folded = true
@@ -292,19 +297,19 @@ scale = Vector2( 0.599028, 0.599028 )
 
 [node name="papel" type="Sprite" parent="counter/contract/sprites"]
 position = Vector2( -13.6235, -13.5982 )
-texture = ExtResource( 15 )
+texture = ExtResource( 16 )
 
 [node name="contrato" type="Sprite" parent="counter/contract/sprites"]
 position = Vector2( 8.8833, -145.191 )
-texture = ExtResource( 16 )
+texture = ExtResource( 17 )
 
 [node name="texto" type="Sprite" parent="counter/contract/sprites"]
 position = Vector2( 14.8232, 31.469 )
-texture = ExtResource( 17 )
+texture = ExtResource( 18 )
 
 [node name="assinatura" type="Sprite" parent="counter/contract/sprites"]
 position = Vector2( -12.7219, 163.239 )
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 
 [node name="collider" type="CollisionShape2D" parent="counter/contract"]
 position = Vector2( -0.454712, 23.3763 )
@@ -325,7 +330,6 @@ visibility_rect = Rect2( -110, -135, 215, 260 )
 process_material = SubResource( 6 )
 
 [node name="items" type="Node2D" parent="counter"]
-editor/display_folded = true
 position = Vector2( 674.256, 420.91 )
 scale = Vector2( 0.563294, 0.563294 )
 
@@ -333,13 +337,13 @@ scale = Vector2( 0.563294, 0.563294 )
 editor/display_folded = true
 position = Vector2( -78.3602, -33.3133 )
 scale = Vector2( 1.4433, 1.4433 )
-script = ExtResource( 19 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm2" type="Sprite" parent="counter/items/lilbot"]
-texture = ExtResource( 20 )
+texture = ExtResource( 21 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/items/lilbot"]
 rotation = 1.57079
@@ -348,13 +352,13 @@ shape = SubResource( 7 )
 [node name="teeth" type="Area2D" parent="counter/items"]
 editor/display_folded = true
 position = Vector2( -71.23, 116.341 )
-script = ExtResource( 19 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm3" type="Sprite" parent="counter/items/teeth"]
-texture = ExtResource( 21 )
+texture = ExtResource( 22 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/items/teeth"]
 shape = SubResource( 8 )
@@ -363,7 +367,7 @@ shape = SubResource( 8 )
 editor/display_folded = true
 position = Vector2( 127.13, 116.479 )
 rotation = -4.00938
-script = ExtResource( 19 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -371,7 +375,7 @@ __meta__ = {
 [node name="itm4" type="Sprite" parent="counter/items/twig"]
 position = Vector2( -20.8915, 6.65112 )
 scale = Vector2( 0.542011, 0.542011 )
-texture = ExtResource( 22 )
+texture = ExtResource( 23 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/items/twig"]
 position = Vector2( 9.61719, -2.34015 )
@@ -382,14 +386,14 @@ shape = SubResource( 9 )
 editor/display_folded = true
 position = Vector2( 99.3738, -106.239 )
 scale = Vector2( 1.641, 1.641 )
-script = ExtResource( 19 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm5" type="Sprite" parent="counter/items/bottle"]
 scale = Vector2( 0.581739, 0.581739 )
-texture = ExtResource( 23 )
+texture = ExtResource( 24 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/items/bottle"]
 position = Vector2( -0.735107, 33.0793 )
@@ -403,14 +407,14 @@ shape = SubResource( 11 )
 editor/display_folded = true
 position = Vector2( -186.438, 92.7732 )
 scale = Vector2( 1.61611, 1.61611 )
-script = ExtResource( 19 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="itm1" type="Sprite" parent="counter/items/fire"]
 scale = Vector2( 0.836525, 0.836525 )
-texture = ExtResource( 24 )
+texture = ExtResource( 25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/items/fire"]
 position = Vector2( 2.20526, 5.88077 )
@@ -419,12 +423,12 @@ shape = SubResource( 12 )
 [node name="coins" type="Area2D" parent="counter/items"]
 editor/display_folded = true
 position = Vector2( 8.24194, 186.82 )
-script = ExtResource( 19 )
+script = ExtResource( 20 )
 
 [node name="moedas" type="Sprite" parent="counter/items/coins"]
 rotation = -0.0863178
 scale = Vector2( 1.14486, 1.14486 )
-texture = ExtResource( 25 )
+texture = ExtResource( 26 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/items/coins"]
 rotation = 1.57096
@@ -443,7 +447,7 @@ shape = SubResource( 15 )
 visible = false
 position = Vector2( 409.83, 277.08 )
 scale = Vector2( 0.504184, 0.504184 )
-texture = ExtResource( 26 )
+texture = ExtResource( 27 )
 
 [node name="audio" type="Node" parent="." groups=[
 "sound",
@@ -451,10 +455,10 @@ texture = ExtResource( 26 )
 script = SubResource( 16 )
 
 [node name="main" type="AudioStreamPlayer" parent="audio"]
-stream = ExtResource( 27 )
+stream = ExtResource( 28 )
 volume_db = -12.0
 
 [node name="sfx" type="Node" parent="audio"]
 
 [node name="door" type="AudioStreamPlayer" parent="audio/sfx"]
-stream = ExtResource( 28 )
+stream = ExtResource( 29 )
