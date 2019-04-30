@@ -17,6 +17,11 @@ func next():
 	var label = text_node.get_node("NinePatchRect/MarginContainer/RichTextLabel")
 	var next = queue.pop_front()
 	if next != null:
-		label.text = next.substr(4, len(next)-4) if "NPC" in next else next.substr(3, len(next)-3)
+		if "NPC" in next:
+			var texto = next.substr(4, len(next)-4)
+			label.text = "NPC: "+texto
+		else:
+			var texto = next.substr(3, len(next)-3)
+			label.text = "PC: "+texto
 	else:
 		text_node.visible = false
