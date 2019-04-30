@@ -16,6 +16,5 @@ func _on_cursor_entered(area):
 
 func _on_cursor_exited(area):
 	if area.is_in_group("cursor"):
-		print(self.name+" diselect")
 		cursor.unselect(self)
 		if self.name == "contract" and cursor.item != null: cursor.item.disconnect("dropped", self, "_on_item_dropped")

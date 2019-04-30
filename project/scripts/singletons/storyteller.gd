@@ -25,4 +25,8 @@ func end_scene():
 func interact(item=null):
 	var current_npc = puppeteer.current.name
 	if current_npc == "supla": audio.play_sfx("haha")
-	textbox.say(current_npc, "entered_quote")
+	if item == null:
+		textbox.say(current_npc, "entered_quote")
+	else:
+		print("interacting with "+item.name)
+		textbox.say(current_npc, item.name)
