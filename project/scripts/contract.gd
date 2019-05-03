@@ -19,7 +19,6 @@ func _process(delta):
 func _on_item_dropped(item):
 	if selected:
 		show_content(item)
-		print(item)
 		storyteller.interact(item)
 		item.visible = false
 		yield(get_tree().create_timer(1.5), "timeout")

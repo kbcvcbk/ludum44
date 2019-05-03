@@ -4,14 +4,17 @@ onready var animator
 onready var contract
 onready var puppeteer
 
+var past_npcs = Array()
+
 func start_scene():
 	var npcs = puppeteer.pool.keys()
 	randomize()
 	var new = npcs[randi() % len(npcs)]
-	while new in puppeteer.past:
+	while new in past_npcs:
 		new = npcs[randi() % len(npcs)]
 	animator.play("contract")
 	puppeteer.enter_npc(new)
+	past_npcs.append(new)
 	yield(puppeteer, "npc_entered")
 	interact()
 	yield(animator, "animation_finished")

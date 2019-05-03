@@ -1,30 +1,30 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://assets/props/parede.png" type="Texture" id=1]
-[ext_resource path="res://assets/legacy_props/porta.png" type="Texture" id=2]
-[ext_resource path="res://assets/legacy_props/porta_open.png" type="Texture" id=3]
+[ext_resource path="res://assets/props/porta.png" type="Texture" id=2]
+[ext_resource path="res://assets/props/porta_open.png" type="Texture" id=3]
 [ext_resource path="res://assets/props/chão.png" type="Texture" id=4]
-[ext_resource path="res://assets/legacy_props/tapete.png" type="Texture" id=5]
-[ext_resource path="res://assets/legacy_props/planta.png" type="Texture" id=6]
+[ext_resource path="res://assets/props/tapete.png" type="Texture" id=5]
+[ext_resource path="res://assets/props/planta.png" type="Texture" id=6]
 [ext_resource path="res://assets/props/neon sign 2.png" type="Texture" id=7]
 [ext_resource path="res://assets/props/aberto.png" type="Texture" id=8]
 [ext_resource path="res://assets/props/moldura.png" type="Texture" id=9]
 [ext_resource path="res://assets/props/espelho.png" type="Texture" id=10]
 [ext_resource path="res://assets/props/jukebox.png" type="Texture" id=11]
-[ext_resource path="res://assets/legacy_props/cat.png" type="Texture" id=12]
+[ext_resource path="res://assets/props/gato.png" type="Texture" id=12]
 [ext_resource path="res://assets/props/máscara cenário .png" type="Texture" id=13]
 [ext_resource path="res://scripts/puppeter.gd" type="Script" id=14]
 [ext_resource path="res://scripts/generic/npc.gd" type="Script" id=15]
-[ext_resource path="res://assets/npcs_legacy/supla do mal.png" type="Texture" id=16]
-[ext_resource path="res://assets/NPCs/triz1.png" type="Texture" id=17]
-[ext_resource path="res://assets/NPCs/dudu crente.png" type="Texture" id=18]
-[ext_resource path="res://assets/NPCs/lauren.png" type="Texture" id=19]
-[ext_resource path="res://assets/npcs_legacy/xuxa paquita demoino.png" type="Texture" id=20]
-[ext_resource path="res://assets/npcs_legacy/punk.png" type="Texture" id=21]
-[ext_resource path="res://assets/npcs_legacy/lavinia1.png" type="Texture" id=22]
-[ext_resource path="res://assets/npcs_legacy/edgar.png" type="Texture" id=23]
-[ext_resource path="res://assets/npcs_legacy/velha DOIDA.png" type="Texture" id=24]
-[ext_resource path="res://assets/legacy_props/balcao.png" type="Texture" id=25]
+[ext_resource path="res://assets/npcs/supla do mal.png" type="Texture" id=16]
+[ext_resource path="res://assets/npcs/trix.png" type="Texture" id=17]
+[ext_resource path="res://assets/npcs/dudu crente.png" type="Texture" id=18]
+[ext_resource path="res://assets/npcs/lauren.png" type="Texture" id=19]
+[ext_resource path="res://assets/npcs/paquita demônio.png" type="Texture" id=20]
+[ext_resource path="res://assets/npcs/punk.png" type="Texture" id=21]
+[ext_resource path="res://assets/npcs/lavinia.png" type="Texture" id=22]
+[ext_resource path="res://assets/npcs/edgar.png" type="Texture" id=23]
+[ext_resource path="res://assets/npcs/velha DOIDA.png" type="Texture" id=24]
+[ext_resource path="res://assets/props/balcão.png" type="Texture" id=25]
 [ext_resource path="res://scripts/contract.gd" type="Script" id=26]
 [ext_resource path="res://assets/contract/papel.png" type="Texture" id=27]
 [ext_resource path="res://assets/contract/contrato.png" type="Texture" id=28]
@@ -40,11 +40,12 @@
 [ext_resource path="res://assets/items/faca que corta o fogo.png" type="Texture" id=38]
 [ext_resource path="res://assets/items/prova de uma traicao.png" type="Texture" id=39]
 [ext_resource path="res://mockup 04.png" type="Texture" id=40]
-[ext_resource path="res://assets/novadaemerald.wav" type="AudioStream" id=41]
+[ext_resource path="res://assets/trade-v2.wav" type="AudioStream" id=41]
 [ext_resource path="res://assets/sfx/door.wav" type="AudioStream" id=42]
 [ext_resource path="res://assets/sfx/suplahaha-[AudioTrimmer.com].wav" type="AudioStream" id=43]
-[ext_resource path="res://assets/textbox.png" type="Texture" id=44]
+[ext_resource path="res://assets/writing/textbox.png" type="Texture" id=44]
 [ext_resource path="res://assets/clutsy.otf" type="DynamicFontData" id=45]
+[ext_resource path="res://assets/writing/pc_textbox.png" type="Texture" id=46]
 
 [sub_resource type="GDScript" id=1]
 script/source = "tool
@@ -127,6 +128,7 @@ flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 50, -5, 0 )
 initial_velocity = 40.0
+angular_velocity = 17.967
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 10.0
@@ -294,13 +296,49 @@ func _ready():
 [sub_resource type="GDScript" id=29]
 script/source = "extends \"res://scripts/generic/selectable.gd\"
 
+signal entered
+signal exited
+
+var tween = Tween.new()
+var scroll = 30
+var duration = 0.3
+onready var init_pos = self.position
+
 func _ready():
-	textbox.text_node = self
+	textbox.text_npc = self
 	visible = false
+	add_child(tween)
 
 func _process(delta):
 	if selected and Input.is_action_just_pressed(\"ui_accept\"):
 		textbox.next()
+
+func enter():
+	self.modulate.a = 0
+	self.position.x += scroll
+	tween.interpolate_property(self, \"modulate:a\",
+			0, 1, duration,
+			Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tween.interpolate_property(self, \"position:x\",
+			self.position.x, init_pos.x, duration,
+			Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.start()
+	yield(tween, \"tween_completed\")
+	self.position = init_pos
+	emit_signal(\"entered\")
+
+func exit():
+	tween.interpolate_property(self, \"modulate:a\",
+			1, 0, duration,
+			Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tween.interpolate_property(self, \"position:x\",
+			init_pos.x, self.position.x+scroll, duration,
+			Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.start()
+	yield(tween, \"tween_completed\")
+	self.visible = false
+	self.position = init_pos
+	emit_signal(\"exited\")
 "
 
 [sub_resource type="DynamicFont" id=30]
@@ -309,6 +347,53 @@ font_data = ExtResource( 45 )
 
 [sub_resource type="RectangleShape2D" id=31]
 extents = Vector2( 165.85, 69.7225 )
+
+[sub_resource type="GDScript" id=32]
+script/source = "extends \"res://scripts/generic/selectable.gd\"
+
+signal entered
+signal exited
+
+var tween = Tween.new()
+var scroll = 30
+var duration = 0.3
+onready var init_pos = self.position
+
+func _ready():
+	textbox.text_pc = self
+	visible = false
+	add_child(tween)
+
+func _process(delta):
+	if selected and Input.is_action_just_pressed(\"ui_accept\"):
+		textbox.next()
+
+func enter():
+	self.modulate.a = 0
+	self.position.y += scroll
+	tween.interpolate_property(self, \"modulate:a\",
+			0, 1, duration,
+			Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tween.interpolate_property(self, \"position:y\",
+			self.position.y, init_pos.y, duration,
+			Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.start()
+	yield(tween, \"tween_completed\")
+	self.position = init_pos
+	emit_signal(\"entered\")
+
+func exit():
+	tween.interpolate_property(self, \"modulate:a\",
+			1, 0, duration,
+			Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tween.interpolate_property(self, \"position:y\",
+			init_pos.y, self.position.y+scroll, duration,
+			Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.start()
+	yield(tween, \"tween_completed\")
+	self.visible = false
+	self.position = init_pos
+	emit_signal(\"exited\")"
 
 [node name="game" type="Node2D"]
 
@@ -382,7 +467,7 @@ texture = ExtResource( 11 )
 [node name="cat" type="Sprite" parent="shop" groups=[
 "prop",
 ]]
-position = Vector2( 108.187, 244.724 )
+position = Vector2( 108.187, 273.318 )
 scale = Vector2( 0.555884, 0.555884 )
 texture = ExtResource( 12 )
 script = SubResource( 2 )
@@ -390,8 +475,8 @@ amplitude = 60
 frequency = 3.0
 
 [node name="máscara cenário " type="Sprite" parent="shop"]
-position = Vector2( 467.063, 298.565 )
-scale = Vector2( 0.639461, 0.639461 )
+position = Vector2( 419.092, 277.085 )
+scale = Vector2( 0.551487, 0.567477 )
 texture = ExtResource( 13 )
 
 [node name="counter" type="Node2D" parent="."]
@@ -409,8 +494,8 @@ script = ExtResource( 14 )
 ]]
 editor/display_folded = true
 visible = false
-position = Vector2( -26.3716, -93.1787 )
-scale = Vector2( 0.161795, 0.161795 )
+position = Vector2( -22.0757, -71.6991 )
+scale = Vector2( 0.479085, 0.479085 )
 script = ExtResource( 15 )
 
 [node name="supla do mal" type="Sprite" parent="counter/npcs/supla"]
@@ -470,9 +555,8 @@ script = ExtResource( 15 )
 
 [node name="xuxa paquita demoino" type="Sprite" parent="counter/npcs/xuxa"]
 position = Vector2( 490.133, 251.07 )
-scale = Vector2( -1.04796, 1.04796 )
+scale = Vector2( -3.10342, 3.10342 )
 texture = ExtResource( 20 )
-region_enabled = true
 region_rect = Rect2( 0, 0, 2500, 2500 )
 
 [node name="punk" type="Node2D" parent="counter/npcs" groups=[
@@ -498,7 +582,7 @@ script = ExtResource( 15 )
 
 [node name="punk" type="Sprite" parent="counter/npcs/vera"]
 position = Vector2( 93.72, -16.5389 )
-scale = Vector2( 2.56795, 2.56795 )
+scale = Vector2( 1.25838, 1.25838 )
 texture = ExtResource( 22 )
 
 [node name="edgar" type="Node2D" parent="counter/npcs" groups=[
@@ -510,7 +594,7 @@ position = Vector2( -21.0972, -73.8397 )
 scale = Vector2( 0.318901, 0.318901 )
 script = ExtResource( 15 )
 
-[node name="punk" type="Sprite" parent="counter/npcs/edgar"]
+[node name="edgar" type="Sprite" parent="counter/npcs/edgar"]
 position = Vector2( 77.1815, -55.1296 )
 scale = Vector2( 1.2227, 1.2227 )
 texture = ExtResource( 23 )
@@ -525,8 +609,8 @@ scale = Vector2( 0.318901, 0.318901 )
 script = ExtResource( 15 )
 
 [node name="punk" type="Sprite" parent="counter/npcs/olga"]
-position = Vector2( 66.1557, -22.0519 )
-scale = Vector2( 0.680123, 0.680123 )
+position = Vector2( 88.6074, 22.8515 )
+scale = Vector2( 1.83243, 1.83243 )
 texture = ExtResource( 24 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="counter/npcs"]
@@ -542,7 +626,7 @@ texture = ExtResource( 25 )
 "contract",
 ]]
 editor/display_folded = true
-position = Vector2( 169.897, 690.335 )
+position = Vector2( 169.897, 410.335 )
 script = ExtResource( 26 )
 __meta__ = {
 "_edit_group_": true
@@ -601,6 +685,8 @@ process_material = SubResource( 5 )
 position = Vector2( 0.100037, 20.1302 )
 rotation = -1.48528
 emitting = false
+amount = 100
+speed_scale = 2.0
 process_material = SubResource( 10 )
 
 [node name="sealed" type="Particles2D" parent="counter/contract"]
@@ -624,6 +710,7 @@ anims/sealed = SubResource( 12 )
 script = SubResource( 13 )
 
 [node name="items" type="YSort" parent="counter"]
+editor/display_folded = true
 position = Vector2( 674.256, 420.91 )
 scale = Vector2( 0.563294, 0.563294 )
 
@@ -786,7 +873,6 @@ texture = ExtResource( 40 )
 [node name="audio" type="Node" parent="." groups=[
 "sound",
 ]]
-editor/display_folded = true
 script = SubResource( 28 )
 
 [node name="main" type="AudioStreamPlayer" parent="audio"]
@@ -804,13 +890,15 @@ stream = ExtResource( 42 )
 stream = ExtResource( 43 )
 volume_db = -12.0
 
-[node name="textbox" type="Area2D" parent="." groups=[
+[node name="npc_text" type="Area2D" parent="." groups=[
 "textbox",
 ]]
+editor/display_folded = true
+visible = false
 position = Vector2( 205.091, 111.734 )
 script = SubResource( 29 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="textbox"]
+[node name="NinePatchRect" type="NinePatchRect" parent="npc_text"]
 margin_left = -178.508
 margin_top = -65.0372
 margin_right = 195.492
@@ -821,7 +909,7 @@ patch_margin_top = 25
 patch_margin_right = 80
 patch_margin_bottom = 95
 
-[node name="MarginContainer" type="MarginContainer" parent="textbox/NinePatchRect"]
+[node name="MarginContainer" type="MarginContainer" parent="npc_text/NinePatchRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 15.0
@@ -832,17 +920,60 @@ rect_clip_content = true
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="RichTextLabel" type="Label" parent="textbox/NinePatchRect/MarginContainer"]
+[node name="RichTextLabel" type="Label" parent="npc_text/NinePatchRect/MarginContainer"]
 margin_top = 25.0
 margin_right = 314.0
 margin_bottom = 100.0
 custom_fonts/font = SubResource( 30 )
 text = "this is an example text.
 this is an example long text and all that sort of stuff"
-align = 1
 autowrap = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="textbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="npc_text"]
+visible = false
+position = Vector2( -11.0264, 7.35093 )
+shape = SubResource( 31 )
+
+[node name="pc_text" type="Area2D" parent="." groups=[
+"textbox",
+]]
+editor/display_folded = true
+visible = false
+position = Vector2( 180.536, 238.385 )
+scale = Vector2( 0.950586, 0.950586 )
+script = SubResource( 32 )
+
+[node name="NinePatchRect" type="NinePatchRect" parent="pc_text"]
+margin_left = -162.837
+margin_top = -80.1262
+margin_right = 212.163
+margin_bottom = 126.874
+texture = ExtResource( 46 )
+region_rect = Rect2( 139.533, 247.385, 499.313, 313.07 )
+patch_margin_top = 42
+patch_margin_bottom = 99
+
+[node name="MarginContainer" type="MarginContainer" parent="pc_text/NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -45.0
+margin_bottom = -60.0
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="RichTextLabel" type="Label" parent="pc_text/NinePatchRect/MarginContainer"]
+margin_top = 26.0
+margin_right = 310.0
+margin_bottom = 101.0
+custom_fonts/font = SubResource( 30 )
+text = "this is an example text.
+this is an example long text and all that sort of stuff"
+autowrap = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pc_text"]
 visible = false
 position = Vector2( -11.0264, 7.35093 )
 shape = SubResource( 31 )

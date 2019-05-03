@@ -1,7 +1,7 @@
 extends Node
 
-var npc_database_file = "res://assets/writing/npc_database.csv"
-var item_matchup_file = "res://assets/writing/npc_item_matchup.csv"
+var npc_database_file = "res://assets/writing/csv/npc_database.csv"
+var item_matchup_file = "res://assets/writing/csv/npc_item_matchup.csv"
 
 func list_items():
 	var file = File.new()
@@ -19,6 +19,7 @@ func read_npc_db():
 	var header = []
 	var read_header = false
 	file.open(npc_database_file, File.READ)
+	var count = 0
 	while !file.eof_reached():
 		if !read_header:
 			header = file.get_csv_line()
@@ -31,6 +32,7 @@ func read_npc_db():
 			for i in range(len(line)):
 				if header[i] == "entered_quote":
 					npc_db[npc_name][header[i]] = line[i].split("|")
+		count += 1
 	file.close()
 	#item
 	file = File.new()
